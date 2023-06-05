@@ -1,11 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(private readonly supabaseService: SupabaseService) {}
+
+  async create(createUserDto: CreateUserDto) {
+    return await this.supabaseService.client.from('users').insert({
+      account: createUserDto.account,
+    });
   }
 
   findAll() {
