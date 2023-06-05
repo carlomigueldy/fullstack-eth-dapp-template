@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { SignatureLike, ethers } from 'ethers';
+import { AUTH_SIGNING_MESSAGE } from 'src/auth/constants';
 
 @Injectable()
 export class AuthService {
+  verify(signature: SignatureLike): string {
+    return ethers.verifyMessage(AUTH_SIGNING_MESSAGE, signature);
+  }
+
+  generateJwt() {
+    // TODO: generate jwt for auth
+  }
+
   create(createAuthDto: CreateAuthDto) {
     return 'This action adds a new auth';
   }
